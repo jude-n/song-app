@@ -1,0 +1,36 @@
+services:
+  # PHP (Laravel) application service
+  php:
+    build:
+      context: .  # Build context is the root of the project
+      dockerfile: docker/php.dockerfile  # Adjust path to your PHP Dockerfile
+    image: ${APP_NAME}_php:arm-dev  # Image name with tag, using the app name from .env
+    volumes:
+      - webapp:/var/www/html  # Mount app code to the container's web root
+    env_file:
+      - .env  # Load environment variables from .env file
+
+  # Nginx web server service
+  web:
+    build:
+      context: .  # Same build context
+      dockerfile: docker/nginx.dockerfile  # Path to your Nginx Dockerfile
+    image: ${APP_NAME}_nginx:arm-dev  # Image name with tag
+    ports:
+      - "${APP_PORT}:443"  # Map custom host port to container's SSL port
+    volumes:
+      - webapp:/var/www  # Mount the same volume for consistency
+    depends_on:
+      - php  # Ensure PHP is running before Nginx starts
+    env_file:
+      - .env
+
+# Define a shared named volume for the application code
+volumes:
+  webapp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${VOLUME_LOCAL_MACHINE}  # Path to your local Laravel app, set in .env
+
