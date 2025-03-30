@@ -36,6 +36,6 @@ export default defineConfig({
     build: {
         outDir: 'public/build',
         emptyOutDir: true, // clears the folder before each build
-        manifest: true,    // makes sure manifest.json is generated
+        manifest: 'manifest.json', // ✅ Explicitly set the manifest location as it's required for the Laravel integration
     },
 });
