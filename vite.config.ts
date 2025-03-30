@@ -33,4 +33,9 @@ export default defineConfig({
             plugins: [tailwindcss, autoprefixer],
         },
     },
+    build: {
+        outDir: 'public/build',
+        emptyOutDir: true, // clears the folder before each build
+        manifest: true,    // makes sure manifest.json is generated
+    },
 });
