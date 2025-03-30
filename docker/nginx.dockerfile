@@ -2,7 +2,8 @@
 FROM node:alpine as npm-build
 WORKDIR /usr/src/app
 COPY . ./
-RUN npm install && npm run build
+RUN npm install
+RUN npm run build
 
 # Generate SSL certs
 FROM alpine as openssl-build
@@ -24,5 +25,5 @@ COPY --from=openssl-build /tmp/key.pem /etc/nginx/ssl/
 COPY --from=openssl-build /tmp/cert.pem /etc/nginx/ssl/
 
 # Frontend assets
-COPY --from=npm-build /usr/src/app/public/ /var/www/html/public/
+COPY --from=npm-build /usr/src/app/public/ /var/www/html/public
 

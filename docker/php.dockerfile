@@ -54,7 +54,7 @@ COPY . .
 RUN composer install --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
 
 # Copy built frontend assets from npm stage into the Laravel public directory
-COPY --from=npm-build /usr/src/app/public/ ./public/
+COPY --from=npm-build /usr/src/app/public/ /var/www/html/public
 
 # Optional Laravel optimizations (can uncomment if you're sure `.env` is ready)
 # RUN php artisan config:cache \
@@ -62,7 +62,8 @@ COPY --from=npm-build /usr/src/app/public/ ./public/
 #     && php artisan view:cache
 
 # Set proper permissions so Laravel can write to required directories
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chown www-data:www-data -R /var/www/html/bootstrap/cache
+RUN chown www-data:www-data -R /var/www/html/storage
 
 # Optional: Copy and configure entrypoint script
 COPY docker/scripts/entrypoint.sh /entrypoint.sh
