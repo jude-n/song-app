@@ -23,6 +23,22 @@ services:
         depends_on:
             - php  # Ensure the PHP container is started before Nginx tries to connect
 
+    vite: # Vite.js development server container because volumes overwrite what is in the container I am using this to build assets locally then copy them to the container
+        image: node:alpine  # Use a lightweight Node.js image as the base for the container
+        working_dir: /usr/src/app  # Set the working directory inside the container
+        volumes:
+            - .:/usr/src/app  # Mount your entire local project directory into the container
+        command: >
+            sh -c "
+                # Check if node_modules exists and isn't empty
+                if [ ! -d node_modules ] || [ -z \"\$(ls -A node_modules)\" ]; then
+                    echo 'Node modules not found, installing...';
+                    npm install;  # Install dependencies if node_modules is missing or empty
+                fi;
+                echo 'Starting application...';
+                npm run build && npm run watch # Build production assets, then start watch mode
+            "
+
 # Define shared named volume with driver options
 volumes:
     songapp:

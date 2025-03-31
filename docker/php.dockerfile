@@ -48,7 +48,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy entire Laravel app codebase
-COPY . .
+COPY . ./
 
 # Install only production PHP dependencies (no dev packages)
 RUN composer install --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader

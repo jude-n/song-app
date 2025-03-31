@@ -1,26 +1,19 @@
-import vue from '@vitejs/plugin-vue';
+import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import laravel from 'laravel-vite-plugin';
 import path from 'path';
-import tailwindcss from 'tailwindcss';
+import tailwindcss from '@tailwindcss/postcss';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.ts'],
-            ssr: 'resources/js/ssr.ts',
+            input: ['resources/js/app.tsx'], // make sure this matches your React entry file
+            ssr: 'resources/js/ssr.tsx',     // if you're doing SSR with React (optional)
             refresh: true,
         }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
-        }),
+        react(), // 👈 this replaces the vue() plugin
     ],
     resolve: {
         alias: {
@@ -35,7 +28,7 @@ export default defineConfig({
     },
     build: {
         outDir: 'public/build',
-        emptyOutDir: true, // clears the folder before each build
-        manifest: 'manifest.json', // ✅ Explicitly set the manifest location as it's required for the Laravel integration
+        emptyOutDir: true,
+        manifest: 'manifest.json',
     },
 });
