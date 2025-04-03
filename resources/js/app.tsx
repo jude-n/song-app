@@ -4,14 +4,9 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
-import type { PageComponent } from './types/page-component';
+import type { PageComponent } from '@/types/songapp/page-component';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-// 🔹 Define a custom type for components that may include a `layout` function
-// React Function component. Means  it is a function, accepts props and returns a react node
-type PageComponent = React.FC & {
-    layout?: (page: React.ReactNode) => React.ReactNode;
-};
 
 createInertiaApp<{
     Component: PageComponent;
