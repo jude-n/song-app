@@ -1,5 +1,9 @@
 import * as React from 'react';
-
+import {
+    Home,
+    Library,
+    Search,
+} from "lucide-react"
 export function Header() {
     return (
         <header className="bg-black p-4 flex items-center justify-between">
@@ -8,17 +12,17 @@ export function Header() {
                 <nav className="flex space-x-2">
                     <button
                         className="px-3 py-2 text-sm font-medium text-white bg-[#282828] rounded-full flex items-center">
-                        {/*<Home size={16} className="mr-2" />*/}
+                        <Home size={16} className="mr-2" />
                         Home
                     </button>
                     <button
                         className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                        {/*<Search size={16} className="mr-2" />*/}
+                        <Search size={16} className="mr-2" />
                         Search
                     </button>
                     <button
                         className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                        {/*<Library size={16} className="mr-2" />*/}
+                        <Library size={16} className="mr-2" />
                         Library
                     </button>
                 </nav>
