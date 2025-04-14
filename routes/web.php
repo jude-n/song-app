@@ -10,6 +10,10 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('song-app/home');
 })->name('home');
+Route::get('/discover', function () {
+    return Inertia::render('song-app/discovery-search');
+})->name('discover');
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
