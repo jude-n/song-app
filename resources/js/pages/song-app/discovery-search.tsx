@@ -1,6 +1,7 @@
 import React from 'react';
 import SongAppLayout from '@/layouts/song-app-layout';
 import ModeSelector from '@/components/songapp/mode-selector';
+import SearchBar from '@/components/songapp/discovery/search-bar';
 
 import { Search, Filter, Disc3, Scissors, Music, PlayCircle, Heart } from 'lucide-react';
 
@@ -13,14 +14,7 @@ export default function DiscoverySearch() {
                     <h1 className="text-3xl font-bold mb-6">Discover Music Evolution</h1>
 
                     <div className="flex gap-4 mb-8">
-                        <div className="relative flex-grow">
-                            <input
-                                type="search"
-                                placeholder="Search for songs, artists, or albums"
-                                className="w-full bg-[#242424] text-white pl-12 pr-4 py-3 rounded-full border border-white border-opacity-10 focus:outline-none focus:ring-2 focus:ring-[#1DB954]"
-                            />
-                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                        </div>
+                    <SearchBar />
                         <button className="bg-[#282828] text-white px-4 py-2 rounded-full flex items-center">
                             <Filter size={16} className="mr-2" />
                             Filters
@@ -98,14 +92,16 @@ export default function DiscoverySearch() {
                                 >
                                     <div className="relative mr-4">
                                         <img
-                                            src={`/placeholder.svg?height=120&width=120`}
+                                            src={`/images/round-icons-dj_vJ7FR06U-unsplash.svg?height=120&width=120`}
                                             alt={`Cover ${i}`}
                                             className="w-24 h-24 object-cover rounded-md"
                                         />
-                                        <button className="absolute bottom-2 right-2 bg-[#1DB954] text-black p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                                        <button
+                                            className="absolute bottom-2 right-2 bg-[#1DB954] text-black p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
                                             <PlayCircle size={16} />
                                         </button>
-                                        <div className="absolute top-2 left-2 bg-[#1DB954] text-black text-xs px-2 py-0.5 rounded-full">
+                                        <div
+                                            className="absolute top-2 left-2 bg-[#1DB954] text-black text-xs px-2 py-0.5 rounded-full">
                                             Cover
                                         </div>
                                     </div>
@@ -121,7 +117,8 @@ export default function DiscoverySearch() {
                                         </div>
                                         <div className="flex items-center justify-between">
                                             <div className="flex space-x-2">
-                                                <span className="bg-[#2E77D0] text-xs px-2 py-1 rounded-full">Rock</span>
+                                                <span
+                                                    className="bg-[#2E77D0] text-xs px-2 py-1 rounded-full">Rock</span>
                                                 <span className="bg-[#AF2896] text-xs px-2 py-1 rounded-full">Pop</span>
                                             </div>
                                             <button className="text-gray-400 hover:text-white">
@@ -133,7 +130,7 @@ export default function DiscoverySearch() {
                             ))}
                         </div>
 
-                        <button className="bg-transparent text-white font-bold py-2 px-6 rounded-full border border-white hover:bg-white hover:bg-opacity-10 transition-colors w-full mt-6">
+                        <button className="bg-transparent text-white font-bold py-2 px-6 rounded-full border border-white hover:bg-white/10 transition-colors w-full mt-6 cursor-pointer">
                             Load More Results
                         </button>
                     </div>
@@ -148,7 +145,7 @@ export default function DiscoverySearch() {
                                 >
                                     <div className="relative mb-3">
                                         <img
-                                            src={`/placeholder.svg?height=160&width=160`}
+                                            src={`/images/round-icons-dj_vJ7FR06U-unsplash.svg?height=160&width=160`}
                                             alt={`Item ${i}`}
                                             className="w-full aspect-square object-cover rounded-md"
                                         />
