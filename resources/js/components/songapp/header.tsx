@@ -41,8 +41,11 @@ export function Header() {
                     </button>
                     <button
                         className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                        <Library size={16} className="mr-2" />
-                        Library
+                        {/*// <Library size={16} className="mr-2" />*/}
+                        {/*// Library*/}
+
+                        <NavItem href="/library" icon={Library} label="Library" iconSize={16} />
+
                     </button>
                 </nav>
             </div>

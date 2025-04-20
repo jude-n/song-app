@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LibraryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +14,8 @@ Route::get('/', function () {
 Route::get('/discover', function () {
     return Inertia::render('song-app/discovery-search');
 })->name('discover');
+
+Route::resource('library', LibraryController::class);
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
