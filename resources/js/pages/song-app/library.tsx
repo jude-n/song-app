@@ -1,13 +1,10 @@
 import React from 'react';
 import { useState } from "react"
+import LibraryTabs from '@/components/songapp/library/library-tabs';
+import { libraryTabs, getDefaultTabId } from '@/data/library-tabs';
 import {
     Heart,
-    Search,
     PlayCircle,
-    SkipBack,
-    SkipForward,
-    Volume2,
-    Home,
     Clock,
     Plus,
     Music,
@@ -19,8 +16,9 @@ import {
 } from "lucide-react"
 import SongAppLayout from '@/layouts/song-app-layout';
 export default function Library() {
-    const [activeTab, setActiveTab] = useState("saved")
-
+    const [activeTabId, setActiveTabId] = useState<string>(getDefaultTabId())
+    // Find the currently active tab
+    const activeTab = libraryTabs.find((tab) => tab.id === activeTabId) || libraryTabs[0]
     return (
         <SongAppLayout title="Library">
             <div className="bg-[#121212] text-white min-h-screen">
@@ -34,34 +32,7 @@ export default function Library() {
                     </div>
 
                     {/* Library Tabs */}
-                    <div className="border-b border-[#282828] mb-6">
-                        <div className="flex space-x-6">
-                            <button
-                                onClick={() => setActiveTab("saved")}
-                                className={`px-4 py-2 font-medium ${
-                                    activeTab === "saved" ? "text-white border-b-2 border-[#1DB954]" : "text-gray-400 hover:text-white"
-                                }`}
-                            >
-                                Saved Items
-                            </button>
-                            <button
-                                onClick={() => setActiveTab("playlists")}
-                                className={`px-4 py-2 font-medium ${
-                                    activeTab === "playlists" ? "text-white border-b-2 border-[#1DB954]" : "text-gray-400 hover:text-white"
-                                }`}
-                            >
-                                Playlists
-                            </button>
-                            <button
-                                onClick={() => setActiveTab("history")}
-                                className={`px-4 py-2 font-medium ${
-                                    activeTab === "history" ? "text-white border-b-2 border-[#1DB954]" : "text-gray-400 hover:text-white"
-                                }`}
-                            >
-                                History
-                            </button>
-                        </div>
-                    </div>
+                    <LibraryTabs tabs={libraryTabs} activeTabId={activeTabId} setActiveTabId={setActiveTabId} />
 
                     {/* Saved Items View */}
                     {activeTab === "saved" && (
@@ -98,7 +69,7 @@ export default function Library() {
                                         >
                                             <div className="relative mb-3">
                                                 <img
-                                                    src={`/placeholder.svg?height=160&width=160`}
+                                                    src={`/images/round-icons-dj_vJ7FR06U-unsplash.svg?height=160&width=160`}
                                                     alt={`Cover ${i}`}
                                                     className="w-full aspect-square object-cover rounded-md"
                                                 />
@@ -136,7 +107,7 @@ export default function Library() {
                                         >
                                             <div className="relative mb-3">
                                                 <img
-                                                    src={`/placeholder.svg?height=160&width=160`}
+                                                    src={`/images/round-icons-dj_vJ7FR06U-unsplash.svg?height=160&width=160`}
                                                     alt={`Sample ${i}`}
                                                     className="w-full aspect-square object-cover rounded-md"
                                                 />
@@ -169,7 +140,7 @@ export default function Library() {
                                         >
                                             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#2E77D0] to-[#AF2896] mx-auto mb-3 overflow-hidden">
                                                 <img
-                                                    src={`/placeholder.svg?height=96&width=96`}
+                                                    src={`/images/round-icons-dj_vJ7FR06U-unsplash.svg?height=96&width=96`}
                                                     alt={`Artist ${i}`}
                                                     className="w-full h-full object-cover"
                                                 />
@@ -290,7 +261,7 @@ export default function Library() {
                                                 <Clock size={20} />
                                             </div>
                                             <img
-                                                src={`/placeholder.svg?height=40&width=40`}
+                                                src={`/images/round-icons-dj_vJ7FR06U-unsplash.svg?height=40&width=40`}
                                                 alt={item.title}
                                                 className="w-10 h-10 rounded-md mr-4"
                                             />

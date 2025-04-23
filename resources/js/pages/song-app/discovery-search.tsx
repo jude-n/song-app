@@ -9,7 +9,7 @@ import TransformationSlider from '@/components/songapp/discovery/filterbar/trans
 import ResultGrid from '@/components/songapp/discovery/resultgrid';
 import RecommendationGrid from '@/components/songapp/discovery/RecommendationGrid';
 
-import { Search, Filter, Disc3, Scissors, Music, PlayCircle, Heart } from 'lucide-react';
+import { Filter} from 'lucide-react';
 
 
 export default function DiscoverySearch() {
