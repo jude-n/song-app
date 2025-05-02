@@ -18,34 +18,15 @@ export function Header() {
                     <button
                         className="px-3 py-2 text-sm font-medium text-white rounded-full flex items-center">
                         <NavItem href="/" icon={Home} label="Home" iconSize={18} iconClass="text-[#1DB954]" />
-
-                        {/*<Link*/}
-                        {/*    href="/"*/}
-                        {/*    className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center cursor-pointer"*/}
-                        {/*>*/}
-                        {/*    <Home size={16} className="mr-2" />*/}
-                        {/*    Home*/}
-                        {/*</Link>*/}
                     </button>
                     <button
                         className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                        {/*<Link*/}
-                        {/*    href="/discover"*/}
-                        {/*    className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center cursor-pointer"*/}
-                        {/*>*/}
-                        {/*    <Search size={16} className="mr-2" />*/}
-                        {/*    Search*/}
-                        {/*</Link>*/}
                         <NavItem href="/discover" icon={Search} label="Search" iconSize={18} />
 
                     </button>
                     <button
                         className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                        {/*// <Library size={16} className="mr-2" />*/}
-                        {/*// Library*/}
-
                         <NavItem href="/library" icon={Library} label="Library" iconSize={16} />
-
                     </button>
                 </nav>
             </div>

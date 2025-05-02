@@ -1,35 +1,16 @@
 import React from "react"
 import { useState } from "react"
-import AuthLayout from '@/layouts/auth-layout';
 
-import { Eye, EyeOff, Facebook, Github, Home, Library, Mail, Search, X } from "lucide-react"
+import { Eye, EyeOff, Facebook, Github, Mail, X } from "lucide-react"
+import MyLayoutTemplate from '@/layouts/templates/my-layout-template';
 export default function Login(){
     const [showPassword, setShowPassword] = useState(false)
     const [loginError, setLoginError] = useState<string | null>(null)
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
+        <MyLayoutTemplate>
 
             <div className="bg-[#121212] text-white min-h-screen">
                 {/* Navigation */}
-                <header className="bg-black p-4 flex items-center justify-between">
-                    <div className="flex items-center space-x-6">
-                        <h1 className="text-2xl font-bold text-white">MusicEvolution</h1>
-                        <nav className="flex space-x-2">
-                            <button className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                                <Home size={16} className="mr-2" />
-                                Home
-                            </button>
-                            <button className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                                <Search size={16} className="mr-2" />
-                                Search
-                            </button>
-                            <button className="px-3 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-full flex items-center">
-                                <Library size={16} className="mr-2" />
-                                Library
-                            </button>
-                        </nav>
-                    </div>
-                </header>
 
                 <div className="flex justify-center items-center py-16 px-4">
                     <div className="w-full max-w-md">
@@ -152,7 +133,7 @@ export default function Login(){
                     </div>
                 </div>
             </div>
-        </AuthLayout>
+        </MyLayoutTemplate>
 
     )
 }
