@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('audio_url');
             $table->string('video_url');
             $table->string('waveform_url');
+            $table->boolean('is_original')->default(true);
             $table->text('lyrics');
             $table->timestamps();
             $table->softDeletes();

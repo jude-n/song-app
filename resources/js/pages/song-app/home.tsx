@@ -1,7 +1,7 @@
 import SongAppLayout from '@/layouts/song-app-layout';
 
-import FeaturedCovers from '@/components/songapp/featured-covers';
-import FeaturedSamples from '@/components/songapp/featured-samples';
+import FeaturedCoverEvolutions from '@/components/songapp/featured-cover-evolutions';
+import FeaturedCoverGenerations from '@/components/songapp/featured-cover-generations';
 import Genres from '@/components/songapp/genres';
 import HeroSection  from '@/components/songapp/hero-section';
 import ModeSelector from '@/components/songapp/mode-selector';
@@ -14,9 +14,9 @@ export default function Home() {
             {/* Mode Selector */}
             <ModeSelector />
             {/* Featured Covers */}
-            <FeaturedCovers />
+            <FeaturedCoverEvolutions />
             {/* Featured Samples */}
-            <FeaturedSamples />
+            <FeaturedCoverGenerations />
             {/* Browse by Genre */}
             <Genres />
             {/* Footer */}

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cover_relationships', function (Blueprint $table) {
+        Schema::create('cover_influences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('influencer_cover_id')->constrained('covers', 'id');
             $table->foreignId('influenced_cover_id')->constrained('covers', 'id');
