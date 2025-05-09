@@ -1,15 +1,17 @@
 import React from 'react';
 import RecommendationCard from './recommendationCard';
-import { PlayCircle } from 'lucide-react';
+import { RecommendationItem } from '@/types/songapp/discovery/recommendation-item';
 
-export default function RecommendationGrid() {
+interface RecommendationGridProps {
+    items: RecommendationItem[];
+}
+export default function RecommendationGrid({ items }: RecommendationGridProps) {
         return (
             <div>
                 <h2 className="text-xl font-bold mb-4">You Might Also Like</h2>
-                <div className="grid grid-cols-5 gap-4">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                        <RecommendationCard
-                            count={i}/>
+                <div className="grid grid-cols-3 gap-4">
+                    {items.map((item, index) => (
+                        <RecommendationCard key={index} {...item} />
                     ))}
                 </div>
             </div>

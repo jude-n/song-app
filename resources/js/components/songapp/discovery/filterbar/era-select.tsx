@@ -18,6 +18,7 @@ export default function EraSelect() {
                 <option value="1980s">1980s</option>
                 <option value="1970s">1970s</option>
                 <option value="1960s">1960s</option>
+                <option value="pre60s">Pre-1960s</option>
             </select>
         </div>
     );
