@@ -2,7 +2,100 @@ import { Disc3, Music, Scissors } from 'lucide-react';
 import ArtistCard from "./artist-card"
 import SavedSection from '@/components/songapp/library/saved-section';
 import React from 'react';
+import { SavedItem } from '@/types/songapp/discovery/saved-item';
 
+const savedCovers: SavedItem[] = [
+    {
+        title: "Hurt",
+        artist: "Johnny Cash",
+        original: "Nine Inch Nails",
+        generation: 1,
+        slug: "hurt-johnny-cash",
+        itemType: "cover",
+        savedAgo: "3d ago",
+    },
+    {
+        title: "Sound of Silence",
+        artist: "Disturbed",
+        original: "Simon & Garfunkel",
+        generation: 1,
+        slug: "sound-of-silence-disturbed",
+        itemType: "cover",
+        savedAgo: "3d ago",
+    },
+    {
+        title: "All Along the Watchtower",
+        artist: "Jimi Hendrix",
+        original: "Bob Dylan",
+        generation: 1,
+        slug: "all-along-the-watchtower-jimi-hendrix",
+        itemType: "cover",
+        savedAgo: "3d ago",
+    },
+    {
+        title: "Knockin' on Heaven's Door",
+        artist: "Guns N' Roses",
+        original: "Bob Dylan",
+        generation: 2,
+        slug: "knockin-on-heavens-door-guns-n-roses",
+        itemType: "cover",
+        savedAgo: "3d ago",
+    },
+    {
+        title: "Hallelujah",
+        artist: "Jeff Buckley",
+        original: "Leonard Cohen",
+        generation: 1,
+        slug: "hallelujah-jeff-buckley",
+        itemType: "cover",
+        savedAgo: "3d ago",
+    }
+    // …other covers
+];
+
+const savedSamples: SavedItem[] = [
+    {
+        title: "Stronger",
+        artist: "Kanye West",
+        original: "Daft Punk",
+        slug: "stronger-kanye-west",
+        itemType: "sample",
+        savedAgo: "1w ago",
+    },
+    {
+        title: "Ice Ice Baby",
+        artist: "Vanilla Ice",
+        original: "Queen & David Bowie",
+        slug: "ice-ice-baby-vanilla-ice",
+        itemType: "sample",
+        savedAgo: "1w ago",
+    },
+    {
+        title: "Mo Money Mo Problems",
+        artist: "Notorious B.I.G.",
+        original: "Diana Ross",
+        slug: "mo-money-mo-problems-notorious-big",
+        itemType: "sample",
+        savedAgo: "1w ago",
+    },
+    {
+        title: "Bitter Sweet Symphony",
+        artist: "The Verve",
+        original: "The Rolling Stones",
+        slug: "bitter-sweet-symphony-the-verve",
+        itemType: "sample",
+        savedAgo: "1w ago",
+    },
+    {
+        title: "U Can't Touch This",
+        artist: "MC Hammer",
+        original: "Rick James",
+        slug: "u-cant-touch-this-mc-hammer",
+        itemType: "sample",
+        savedAgo: "1w ago",
+    },
+    // …other samples
+];
 export default function SavedItemsView() {
     return (
         <div>
@@ -25,10 +118,10 @@ export default function SavedItemsView() {
                 </button>
             </div>
             {/* Saved Covers Section */}
-            <SavedSection title="Saved Covers" subtitle="Saved Cover" badgeText="Cover" badgeColor="#1DB954" iconColor="#1DB954" itemType="cover" />
+            <SavedSection title="Saved Covers" seeAllHref="/library/covers" items={savedCovers} />
 
             {/* Saved Samples Section */}
-            <SavedSection title="Saved Samples" subtitle="Saved Sample" badgeText="Sample" badgeColor="#AF2896" iconColor="#AF2896" itemType="sample" />
+            <SavedSection title="Saved Samples" seeAllHref="/library/samples" items={savedSamples} />
 
 
             {/* Favorite Artists */}
