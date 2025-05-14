@@ -10,6 +10,13 @@ type SavedSectionProps = {
     columns?: number;
 }
 export default function SavedSection({ title, seeAllHref, items, columns = 5}: SavedSectionProps) {
+    const columnClass = {
+        2: 'grid-cols-2',
+        3: 'grid-cols-3',
+        4: 'grid-cols-4',
+        5: 'grid-cols-5',
+        6: 'grid-cols-6',
+    }[columns] || 'grid-cols-2'; // default fallback
 
     return (
         <div className="mb-8">
@@ -20,7 +27,7 @@ export default function SavedSection({ title, seeAllHref, items, columns = 5}: S
                     See All <ChevronRight size={16} />
                 </button>
             </div>
-            <div className={`grid grid-cols-${columns} gap-4`}>
+            <div className={`grid ${columnClass} gap-4`}>
                 {items.map((item, idx) => (
                     <MediaCard key={idx} {...item} />
                 ))}

@@ -3,13 +3,13 @@ import PlaylistCard from "./playlist-card"
 
 export default function PlaylistsView() {
     const playlists = [
-        { name: "Best Cover Songs", count: 24, icon: <Disc3 size={24} /> },
-        { name: "Hip Hop Samples", count: 18, icon: <Scissors size={24} /> },
-        { name: "Evolution of Rock", count: 32, icon: <Music size={24} /> },
-        { name: "Acoustic Covers", count: 15, icon: <Disc3 size={24} /> },
-        { name: "Electronic Samples", count: 27, icon: <Scissors size={24} /> },
-        { name: "Jazz Transformations", count: 12, icon: <Music size={24} /> },
-        { name: "90s Reimagined", count: 20, icon: <Disc3 size={24} /> },
+        { name: "Best Cover Songs", count: 24, createdAt: "2 months ago", icon: <Disc3 size={24} /> },
+        { name: "Hip Hop Samples", count: 18, createdAt: "3 weeks ago", icon: <Scissors size={24} /> },
+        { name: "Evolution of Rock", count: 32, createdAt: "1 month ago", icon: <Music size={24} /> },
+        { name: "Acoustic Covers", count: 15, createdAt: "2 days ago", icon: <Disc3 size={24} /> },
+        { name: "Electronic Samples", count: 27, createdAt: "5 months ago", icon: <Scissors size={24} /> },
+        { name: "Jazz Transformations", count: 12, createdAt: "1 week ago", icon: <Music size={24} /> },
+        { name: "90s Reimagined", count: 20, createdAt: "1 Year ago", icon: <Disc3 size={2} /> },
     ]
 
     return (
@@ -26,7 +26,7 @@ export default function PlaylistsView() {
 
                 {/* Existing Playlists */}
                 {playlists.map((playlist, i) => (
-                    <PlaylistCard key={i} name={playlist.name} songCount={playlist.count} icon={playlist.icon} />
+                    <PlaylistCard key={i} name={playlist.name} songCount={playlist.count} playlistCreatedAt={playlist.createdAt} icon={playlist.icon} />
                 ))}
             </div>
         </div>
