@@ -21,6 +21,7 @@ export default function PlaylistCard({ name, songCount, playlistCreatedAt, icon 
             <h3 className="font-bold text-lg">{name}</h3>
             <p className="text-sm text-gray-400">{songCount} songs</p>
             <div className="flex justify-between items-center mt-2">
+                <span className="text-xs text-gray-500">Created {playlistCreatedAt}</span>
                 <ListMusic size={14} className="text-gray-400" />
             </div>
         </div>
