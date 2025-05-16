@@ -1,6 +1,7 @@
 import { Plus, Disc3, Scissors, Music } from "lucide-react"
 import PlaylistCard from "./playlist-card"
 import FollowedPlaylists, { FollowedPlaylist } from '@/components/songapp/library/followed-playlists';
+import { Link } from "@inertiajs/react";
 
 export default function PlaylistsView() {
     const playlists = [
@@ -26,16 +27,18 @@ export default function PlaylistsView() {
             <h2 className="text-xl font-bold mb-4">Your Playlists</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
                 {/* Create New Playlist Card */}
-                <div
-                    className="bg-gradient-to-br from-[#2E77D0] to-[#1DB954] rounded-lg p-4 cursor-pointer hover:opacity-90 transition-opacity">
-                    <div className="flex items-center justify-center h-40">
-                        <Plus size={48} className="text-white" />
+                <Link href="route('playlists.create')" className="text-white hover:text-[#1DB954] cursor-pointer">
+                    <div
+                        className="bg-gradient-to-br from-[#2E77D0] to-[#1DB954] rounded-lg p-4 cursor-pointer hover:opacity-90 transition-opacity">
+                        <div className="flex items-center justify-center h-40">
+                            <Plus size={48} className="text-white" />
+                        </div>
+                        <h3 className="font-bold text-lg mt-2">Create New Playlist</h3>
+                        <p className="text-sm text-white text-opacity-80">
+                            Start collecting your favorite music
+                        </p>
                     </div>
-                    <h3 className="font-bold text-lg mt-2">Create New Playlist</h3>
-                    <p className="text-sm text-white text-opacity-80">
-                        Start collecting your favorite music
-                    </p>
-                </div>
+                </Link>
 
                 {/* Existing Playlists */}
                 {playlists.map((playlist, i) => (

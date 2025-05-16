@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\PlaylistController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,6 +17,8 @@ Route::get('/discover', function () {
 })->name('discover');
 
 Route::resource('library', LibraryController::class);
+
+Route::resource('playlists', PlaylistController::class);
 
 
 Route::middleware(['auth', 'verified'])->group(function () {

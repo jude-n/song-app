@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class LibraryController extends Controller
+class PlaylistController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('song-app/library/library');
+        //
     }
 
     /**
@@ -20,7 +20,7 @@ class LibraryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('song-app/library/create-playlist');
     }
 
     /**
