@@ -20,11 +20,12 @@ export default function Library() {
                 <div className="container mx-auto px-8 py-8">
                     <div className="flex items-center justify-between mb-6">
                         <h1 className="text-3xl font-bold">Your Library</h1>
-                        <Link href={route('playlists.create')} className="bg-[#1DB954] text-black font-bold py-2 px-6 rounded-full hover:bg-[#1ED760] transition-colors flex items-center">
-                            <button className="bg-[#1DB954] text-black font-bold py-2 px-6 rounded-full hover:bg-[#1ED760] transition-colors cursor-pointer flex items-center">
-                                <Plus size={16} className="mr-2" />
-                                Create Playlist
-                            </button>
+                        <Link
+                            href={route('playlists.create')}
+                            className="bg-[#1DB954] text-black font-bold py-2 px-6 rounded-full hover:bg-[#1ED760] transition-colors flex items-center"
+                        >
+                            <Plus size={16} className="mr-2" />
+                            Create Playlist
                         </Link>
                     </div>
 
