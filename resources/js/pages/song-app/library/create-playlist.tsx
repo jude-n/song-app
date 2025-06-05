@@ -13,7 +13,7 @@ export default function CreatePlaylist() {
         <SongAppLayout title="Library">
             <div className="container mx-auto px-8 py-8">
                 <div className="flex items-center mb-6">
-                    <Link href="/library/playlists" className="mr-4 text-gray-400 hover:text-white">
+                    <Link href="/library" className="mr-4 text-gray-400 hover:text-white">
                         <ChevronLeft size={24} />
                     </Link>
                     <h1 className="text-3xl font-bold">Create New Playlist</h1>

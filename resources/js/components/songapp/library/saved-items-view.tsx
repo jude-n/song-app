@@ -102,17 +102,17 @@ export default function SavedItemsView() {
 
             <div className="flex space-x-4 mb-6">
                 <button
-                    className="bg-[#1DB954] text-black font-bold py-2 px-6 rounded-full hover:bg-[#1ED760] transition-colors flex items-center">
+                    className="bg-[#1DB954] text-black font-bold py-2 px-6 rounded-full hover:bg-[#1ED760] cursor-pointer transition-colors flex items-center">
                     <Music size={16} className="mr-2" />
                     All
                 </button>
                 <button
-                    className="bg-transparent text-white font-bold py-2 px-6 rounded-full border border-white hover:bg-white hover:bg-opacity-10 transition-colors flex items-center">
+                    className="bg-transparent text-white font-bold py-2 px-6 rounded-full border border-white hover:bg-[#282828] hover:bg-opacity-10 cursor-pointer transition-colors flex items-center">
                     <Disc3 size={16} className="mr-2" />
                     Covers
                 </button>
                 <button
-                    className="bg-transparent text-white font-bold py-2 px-6 rounded-full border border-white hover:bg-white hover:bg-opacity-10 transition-colors flex items-center">
+                    className="bg-transparent text-white font-bold py-2 px-6 rounded-full border border-white hover:bg-[#282828] hover:bg-opacity-10 cursor-pointer transition-colors flex items-center">
                     <Scissors size={16} className="mr-2" />
                     Samples
                 </button>
