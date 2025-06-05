@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Plus, Disc3, Scissors, Music } from "lucide-react"
 import PlaylistCard from "./playlist-card"
 import FollowedPlaylists, { FollowedPlaylist } from '@/components/songapp/library/followed-playlists';
 import { Link } from "@inertiajs/react";
+import PlaylistModal from '@/components/songapp/library/createplaylist/playlist-modal';
 
 export default function PlaylistsView() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const playlists = [
         { name: "Best Cover Songs", count: 24, createdAt: "2 months ago", icon: <Disc3 size={24} /> },
         { name: "Hip Hop Samples", count: 18, createdAt: "3 weeks ago", icon: <Scissors size={24} /> },
@@ -27,7 +31,7 @@ export default function PlaylistsView() {
             <h2 className="text-xl font-bold mb-4">Your Playlists</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
                 {/* Create New Playlist Card */}
-                <Link href="route('playlists.create')" className="text-white hover:text-[#1DB954] cursor-pointer">
+                <div onClick={() => setIsModalOpen(true)} className="text-white hover:text-[#00ffff] cursor-pointer">
                     <div
                         className="bg-gradient-to-br from-[#2E77D0] to-[#1DB954] rounded-lg p-4 cursor-pointer hover:opacity-90 transition-opacity">
                         <div className="flex items-center justify-center h-40">
@@ -38,7 +42,7 @@ export default function PlaylistsView() {
                             Start collecting your favorite music
                         </p>
                     </div>
-                </Link>
+                </div>
 
                 {/* Existing Playlists */}
                 {playlists.map((playlist, i) => (
@@ -54,6 +58,9 @@ export default function PlaylistsView() {
 
             {/* Followed Playlists */}
             <FollowedPlaylists playlists={followed} />
+
+            {/* Modal */}
+            <PlaylistModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     )
 }
