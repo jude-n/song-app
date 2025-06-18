@@ -17,7 +17,7 @@ class CoverRelationshipsSeeder extends Seeder
             ->where('title',$title)
             ->value('id');
 
-        DB::table('cover_relationships')->insert([
+        DB::table('cover_influences')->insert([
             [
                 'influencer_cover_id'  => $findCover('Hallelujah (Cover)'),
                 'influenced_cover_id'  => $findCover('Hallelujah (Cover)'),
