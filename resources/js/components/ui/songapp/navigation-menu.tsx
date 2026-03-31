@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePage, Link } from '@inertiajs/react';
-import { LucideIcon } from 'lucide-react'; // 👈 this is the type of any Lucide icon
+import { LucideIcon } from 'lucide-react';
 
 
 type NavItemProps = {
@@ -10,32 +10,36 @@ type NavItemProps = {
     iconSize?: number;
     iconClass?: string;
 };
+
 /**
  * A navigation item that highlights when the current URL matches.
- *
- * @param {string} href - The route to link to.
- * @param {React.ElementType} icon - Lucide icon component (e.g. Home, Search).
- * @param {string} label - Text label to display.
- * @param {number} iconSize - Size of the icon (default: 16).
- * @param {string} iconClass - Additional Tailwind classes for the icon.
  */
-export default function NavItem({ href, icon: Icon, label, iconSize = 16, iconClass = '' }:NavItemProps) {
+export default function NavItem({ href, icon: Icon, label, iconSize = 16, iconClass = '' }: NavItemProps) {
     const { url } = usePage();
     const isActive = href === '/'
-        ? url === '/' // exact match for home
-        : url.startsWith(href); // startsWith for other pages like /search
-
-    const baseClasses = 'px-3 py-2 text-sm font-medium rounded-full flex items-center';
-    const activeClasses = 'text-white bg-[#282828]';
-    const inactiveClasses = 'text-gray-400 hover:text-white';
+        ? url === '/'
+        : url.startsWith(href);
 
     return (
         <Link
             href={href}
-            className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}
+            className={`
+                relative px-4 py-2 text-sm font-medium rounded-full
+                flex items-center gap-2 transition-all duration-200
+                ${isActive
+                    ? 'text-white bg-[#282828] shadow-inner'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                }
+            `}
         >
-            <Icon size={iconSize} className={`mr-2 ${iconClass}`} />
-            {label}
+            <Icon
+                size={iconSize}
+                className={`transition-transform ${isActive ? 'scale-110' : ''} ${iconClass}`}
+            />
+            <span>{label}</span>
+            {isActive && (
+                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#1DB954] rounded-full" />
+            )}
         </Link>
     );
 }
