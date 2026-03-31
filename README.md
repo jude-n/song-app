@@ -1,11 +1,6 @@
 Project: MusicEvolution (Song App)
 =================================
 
-What I'm going to add
-- A concise README describing the app, tools & tech used
-- Mermaid ER diagrams of the database (derived from migrations)
-- Step-by-step instructions to start the app with Docker (using the existing `docker-compose.yml`)
-
 Overview
 --------
 MusicEvolution ("song-app") is a Laravel application that models song relationships such as covers, samples, comparisons and analyses. It provides browsing by genre, playlists, and tools for exploring how music evolves.
