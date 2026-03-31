@@ -1,0 +1,261 @@
+```mermaid
+erDiagram
+    USERS {
+        bigint id
+        varchar username
+        varchar first_name
+        varchar last_name
+        varchar password_hash
+        varchar display_name
+        text bio
+        varchar profile_image_url
+        varchar email
+        timestamp email_verified_at
+        varchar password
+        timestamp last_login_at
+    }
+
+    PASSWORD_RESET_TOKENS {
+        varchar email
+        varchar token
+        timestamp created_at
+    }
+
+    SESSIONS {
+        varchar id
+        bigint FK user_id
+        varchar ip_address
+        text user_agent
+        longtext payload
+        int last_activity
+    }
+
+    CACHE {
+        varchar key
+        mediumText value
+        int expiration
+    }
+
+    CACHE_LOCKS {
+        varchar key
+        varchar owner
+        int expiration
+    }
+
+    JOBS {
+        bigint id
+        varchar queue
+        longtext payload
+        unsignedTinyInteger attempts
+        unsignedInteger reserved_at
+        unsignedInteger available_at
+        unsignedInteger created_at
+    }
+
+    JOB_BATCHES {
+        varchar id
+        varchar name
+        int total_jobs
+        int pending_jobs
+        int failed_jobs
+        longtext failed_job_ids
+        mediumText options
+        int cancelled_at
+        int created_at
+        int finished_at
+    }
+
+    FAILED_JOBS {
+        bigint id
+        varchar uuid
+        text connection
+        text queue
+        longtext payload
+        longtext exception
+        timestamp failed_at
+    }
+
+    SONGS {
+        bigint id
+        varchar title
+        bigint FK artist_id
+        bigint FK album_id
+        int view_count
+        boolean is_featured
+        date release_date
+        int duration
+        varchar audio_url
+        varchar video_url
+        varchar waveform_url
+        boolean is_original
+        text lyrics
+    }
+
+    COVER_INFLUENCES {
+        bigint id
+        bigint FK influencer_cover_id
+        bigint FK influenced_cover_id
+        text influence_description
+    }
+
+    SAMPLE_ANALYSIS {
+        bigint id
+        bigint FK relationship_id
+        float tempo_change
+        int pitch_shift
+        float transformation_level
+        int chop_complexity
+        text additional_effects
+        json additional_data
+    }
+
+    GENRES {
+        bigint id
+        varchar name
+        varchar description
+    }
+
+    COVERS {
+        bigint id
+        bigint FK original_song_id
+        bigint FK cover_song_id
+        bigint FK based_on_cover_id
+        varchar title
+        bigint FK artist_id
+        int view_count
+        boolean is_featured
+        bigint FK album_id
+        date release_date
+        int duration
+        varchar audio_url
+        varchar video_url
+        varchar waveform_url
+        text lyrics
+    }
+
+    SAMPLE_RELATIONSHIPS {
+        bigint id
+        bigint FK sampled_song_id
+        bigint FK sampling_by_song_id
+        int sample_start_time
+        int sample_end_time
+        int placement_time
+        text sample_description
+        boolean is_confirmed
+    }
+
+    PLAYLISTS {
+        bigint id
+        bigint FK user_id
+        varchar name
+        text description
+        boolean is_public
+        varchar cover_image_url
+    }
+
+    SONG_GENRES {
+        bigint id
+        bigint FK song_id
+        bigint FK genre_id
+    }
+
+    ALBUMS {
+        bigint id
+        varchar title
+        bigint FK artist_id
+        date release_date
+        varchar cover_image_url
+        int view_count
+        boolean is_featured
+        varchar external_url
+    }
+
+    ARTISTS {
+        bigint id
+        varchar name
+        text bio
+        int formed_year
+        varchar image_url
+        varchar external_url
+    }
+
+    PLAYLIST_ITEMS {
+        bigint id
+        bigint FK playlist_id
+        bigint FK comparison_id
+        int order
+        timestamp added_at
+    }
+
+    COMPARISONS {
+        bigint id
+        bigint FK original_song_id
+        bigint FK cover_id
+        varchar title
+        varchar description
+        boolean featured
+        int view_count
+    }
+
+    COMPARISON_ANALYSIS {
+        bigint id
+        bigint FK comparison_id
+        float tempo_original
+        float tempo_cover
+        varchar key_original
+        varchar key_cover
+        float instrumentation_difference
+        float vocal_style_difference
+        float transformation_level
+        json additional_data
+    }
+
+    COMMENTS {
+        bigint id
+        bigint FK user_id
+        bigint FK comparison_id
+        text content
+        index created_at
+    }
+
+    USER_FAVOURITES {
+        bigint id
+        bigint FK user_id
+        bigint FK comparison_id
+    }
+
+    USER_HISTORY {
+        bigint id
+        bigint FK user_id
+        bigint FK comparison_id
+        timestamp viewed_at
+    }
+
+    RATINGS {
+        bigint id
+        bigint FK user_id
+        bigint FK comparison_id
+        int score
+    }
+
+    ACTIVITY_LOG {
+        bigint id
+        varchar log_name
+        text description
+        json properties
+    }
+
+    RELATIONSHIP_TYPES {
+        bigint id
+        varchar name
+    }
+
+    ORIGINAL_COVER_RELATIONSHIPS {
+        id relationship_id
+        unsignedBigInteger original_song_id
+        unsignedBigInteger cover_song_id
+        unsignedBigInteger relationship_type_id
+    }
+
+    %% Relationships (heuristic FK detection)
+```
