@@ -58,11 +58,13 @@ Phase 1 — Core (MVP)
   covers                  Relationship table linking original → cover song.
                           Holds: root_original_song_id, original_song_id, cover_song_id,
                           based_on_cover_id (lineage chain), relationship_type_id,
-                          cover_number (chronological position), reference_start/end_time
-                          (for section-specific covers), notes, view_count, is_featured
+                          reference_start/end_time (for section-specific covers),
+                          notes, view_count, is_featured.
+                          Chronological position is derived at query time (RANK() OVER),
+                          not stored — avoids stale numbers when earlier covers are discovered
   cover_influences        Cover-to-cover influence links (Phase 3 feature, table present)
   sample_relationships    Song A samples Song B. Captures sample_start/end_time, placement_time,
-                          sample_number (chronological), is_confirmed
+                          is_confirmed. Chronological position derived at query time
   sample_analysis         Audio analysis of a sample: tempo_change, pitch_shift,
                           transformation_level, chop_complexity, additional_effects
   comparisons             Editorial original-vs-cover pairing with title, description, view_count
@@ -108,61 +110,65 @@ Infrastructure (Laravel / packages)
 erDiagram
     USERS {
         bigint id PK
-        varchar username UNIQUE
+        varchar username UK
         varchar first_name
         varchar last_name
         varchar display_name
-        text bio NULL
-        varchar email UNIQUE
+        text bio
+        varchar email UK
         varchar password
-        timestamp last_login_at NULL
-        timestamp email_verified_at NULL
+        timestamp last_login_at
+        timestamp email_verified_at
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     ARTISTS {
         bigint id PK
         varchar name
-        varchar slug UNIQUE
-        text bio NULL
-        int formed_year NULL
-        varchar external_url NULL
+        varchar slug UK
+        text bio
+        int formed_year
+        varchar external_url
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     ALBUMS {
         bigint id PK
         varchar title
-        varchar slug UNIQUE
+        varchar slug UK
         bigint artist_id FK
+        smallint release_year
+        tinyint release_month
         date release_date
         int view_count
         boolean is_featured
-        varchar external_url NULL
+        varchar external_url
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     SONGS {
         bigint id PK
         varchar title
-        varchar slug UNIQUE
+        varchar slug UK
         bigint artist_id FK
-        bigint album_id FK NULL
+        bigint album_id FK
         int view_count
         boolean is_featured
+        smallint release_year
+        tinyint release_month
         date release_date
-        int duration NULL
+        int duration
         boolean is_original
-        text lyrics NULL
+        text lyrics
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     SONG_STREAMING_LINKS {
@@ -170,7 +176,7 @@ erDiagram
         bigint song_id FK
         varchar platform
         varchar url
-        varchar external_id NULL
+        varchar external_id
         timestamp created_at
         timestamp updated_at
     }
@@ -178,17 +184,17 @@ erDiagram
     GENRES {
         bigint id PK
         varchar name
-        varchar slug UNIQUE
-        varchar description NULL
+        varchar slug UK
+        varchar description
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     RELATIONSHIP_TYPES {
         bigint id PK
-        varchar name UNIQUE
-        varchar slug UNIQUE
+        varchar name UK
+        varchar slug UK
         timestamp created_at
         timestamp updated_at
     }
@@ -198,32 +204,30 @@ erDiagram
         bigint root_original_song_id FK
         bigint original_song_id FK
         bigint cover_song_id FK
-        bigint based_on_cover_id FK NULL
-        bigint relationship_type_id FK NULL
-        smallint cover_number NULL
-        int reference_start_time NULL
-        int reference_end_time NULL
-        text notes NULL
+        bigint based_on_cover_id FK
+        bigint relationship_type_id FK
+        int reference_start_time
+        int reference_end_time
+        text notes
         int view_count
         boolean is_featured
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     SAMPLE_RELATIONSHIPS {
         bigint id PK
         bigint sampled_song_id FK
         bigint sampling_by_song_id FK
-        smallint sample_number NULL
-        int sample_start_time NULL
-        int sample_end_time NULL
-        int placement_time NULL
-        text sample_description NULL
+        int sample_start_time
+        int sample_end_time
+        int placement_time
+        text sample_description
         boolean is_confirmed
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     COMPARISONS {
@@ -231,23 +235,23 @@ erDiagram
         bigint original_song_id FK
         bigint cover_id FK
         varchar title
-        text description NULL
+        text description
         boolean featured
         int view_count
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     PLAYLISTS {
         bigint id PK
         bigint user_id FK
         varchar name
-        text description NULL
+        text description
         boolean is_public
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     PLAYLIST_ITEMS {
@@ -256,10 +260,10 @@ erDiagram
         varchar playlistable_type
         bigint playlistable_id
         int order
-        timestamp added_at NULL
+        timestamp added_at
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     COMMENTS {
@@ -267,11 +271,11 @@ erDiagram
         bigint user_id FK
         varchar commentable_type
         bigint commentable_id
-        bigint parent_id FK NULL
+        bigint parent_id FK
         text content
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     RATINGS {
@@ -291,15 +295,15 @@ erDiagram
         bigint favouritable_id
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     FEATURED_COVERS {
         bigint id PK
         bigint cover_id FK
-        date featured_date UNIQUE
-        text blurb NULL
-        bigint curated_by FK NULL
+        date featured_date UK
+        text blurb
+        bigint curated_by FK
         timestamp created_at
         timestamp updated_at
     }
@@ -308,32 +312,32 @@ erDiagram
         bigint id PK
         bigint author_id FK
         varchar title
-        varchar slug UNIQUE
+        varchar slug UK
         text body
         varchar type
-        timestamp published_at NULL
+        timestamp published_at
         int view_count
         boolean is_featured
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     COVER_SUGGESTIONS {
         bigint id PK
         bigint suggested_by FK
         bigint original_song_id FK
-        bigint cover_song_id FK NULL
-        varchar cover_artist_name NULL
-        varchar cover_title NULL
-        varchar cover_url NULL
+        bigint cover_song_id FK
+        varchar cover_artist_name
+        varchar cover_title
+        varchar cover_url
         varchar status
-        bigint reviewed_by FK NULL
-        timestamp reviewed_at NULL
-        text review_notes NULL
+        bigint reviewed_by FK
+        timestamp reviewed_at
+        text review_notes
         timestamp created_at
         timestamp updated_at
-        timestamp deleted_at NULL
+        timestamp deleted_at
     }
 
     USER_FOLLOWS {
@@ -385,7 +389,7 @@ Design notes
 
 **samples capture the "I know that beat" moment.** `sample_relationships` records exactly which section of the original was sampled (`sample_start_time`, `sample_end_time`) and where it appears in the new song (`placement_time`).
 
-**Polymorphic tables use Laravel morphs.** Five tables use `_type` + `_id` column pairs so a single table serves multiple models without duplication:
+**Polymorphic tables use Laravel morphs.** Eight tables use `_type` + `_id` column pairs so a single table serves multiple models without duplication:
 - `playlist_items` (playlistable) — Song, Cover, Comparison
 - `comments` (commentable) — Cover, Comparison, Song, Article — threaded via `parent_id`
 - `ratings` (ratable) — Cover, Comparison, Song

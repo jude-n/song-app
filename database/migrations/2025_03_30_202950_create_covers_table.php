@@ -28,8 +28,8 @@ return new class extends Migration
 
             // NOTE: chronological position (cover_number) is NOT stored here.
             // It is derived at query time by ranking covers of the same root_original_song_id
-            // ordered by songs.release_date ASC via the cover_song_id join.
-            // Covers with no release_date are ranked NULL and shown last.
+            // ordered by songs.release_year, release_month, release_date ASC via the cover_song_id join.
+            // release_year and release_month are required; release_date (exact day) is nullable and used as a tiebreaker.
 
             // Optional: specific section of the original this cover references
             $table->integer('reference_start_time')->nullable(); // seconds
