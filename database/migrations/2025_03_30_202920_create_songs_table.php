@@ -19,7 +19,9 @@ return new class extends Migration
             $table->foreignId('album_id')->nullable()->constrained('albums', 'id')->nullOnDelete();
             $table->integer('view_count')->default(0);
             $table->boolean('is_featured')->default(false);
-            $table->date('release_date')->index('idx_release_date');
+            $table->unsignedSmallInteger('release_year');                        // required — e.g. 1971
+            $table->unsignedTinyInteger('release_month');                         // required — 1–12
+            $table->date('release_date')->nullable()->index('idx_release_date'); // set only when exact day is known
             $table->integer('duration')->nullable(); // in seconds
             $table->boolean('is_original')->default(true);
             $table->text('lyrics')->nullable();

@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sampled_song_id')->constrained('songs', 'id');
             $table->foreignId('sampling_by_song_id')->constrained('songs', 'id');
-            $table->unsignedSmallInteger('sample_number')->nullable(); // 1 = first song to sample this, 2 = next, etc.
+            // NOTE: sample chronological position is NOT stored here.
+            // It is derived at query time by ranking rows with the same sampled_song_id
+            // ordered by songs.release_date ASC via the sampling_by_song_id join.
+            // Songs with no release_date are ranked NULL and shown last.
             $table->integer('sample_start_time')->nullable(); // Start time in seconds in the original
             $table->integer('sample_end_time')->nullable();   // End time in seconds in the original
             $table->integer('placement_time')->nullable();    // Where the sample appears in the new song (seconds)

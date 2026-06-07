@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('title')->index('idx_album_title');
             $table->string('slug')->unique();
             $table->foreignId('artist_id')->constrained('artists', 'id')->onDelete('cascade');
-            $table->date('release_date')->index('idx_release_date');
+            $table->unsignedSmallInteger('release_year');                        // required — e.g. 1971
+            $table->unsignedTinyInteger('release_month');                         // required — 1–12
+            $table->date('release_date')->nullable()->index('idx_release_date'); // set only when exact day is known
             $table->integer('view_count')->default(0);
             $table->boolean('is_featured')->default(false);
             $table->string('external_url')->nullable();
