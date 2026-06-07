@@ -6,22 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('relationship_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique(); // e.g. cover, remake, remix, etc.
+            $table->string('name')->unique(); // e.g. cover, remake, remix, reinterpretation
+            $table->string('slug')->unique(); // e.g. cover, remake, remix — used in URLs
             $table->timestamps();
         });
-
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('relationship_types');

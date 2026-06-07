@@ -14,17 +14,15 @@ return new class extends Migration
         Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->string('title')->index('idx_title');
+            $table->string('slug')->unique();
             $table->foreignId('artist_id')->constrained('artists', 'id')->onDelete('cascade');
-            $table->foreignId('album_id')->constrained('albums', 'id')->onDelete('cascade');
+            $table->foreignId('album_id')->nullable()->constrained('albums', 'id')->nullOnDelete();
             $table->integer('view_count')->default(0);
             $table->boolean('is_featured')->default(false);
             $table->date('release_date')->index('idx_release_date');
-            $table->integer('duration'); // in seconds
-            $table->string('audio_url');
-            $table->string('video_url');
-            $table->string('waveform_url');
+            $table->integer('duration')->nullable(); // in seconds
             $table->boolean('is_original')->default(true);
-            $table->text('lyrics');
+            $table->text('lyrics')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

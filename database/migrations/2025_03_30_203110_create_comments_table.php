@@ -6,26 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
-            $table->foreignId('comparison_id')->constrained('comparisons', 'id')->onDelete('cascade');
+
+            // Polymorphic — commentable_type + commentable_id
+            // Supported models: Cover, Comparison, Song, Article
+            // commentable_type stores the fully qualified model class e.g. App\Models\Cover
+            // commentable_id stores the model's primary key
+            $table->morphs('commentable');
+
+            // Self-referencing FK for threaded replies
+            // null  = top-level comment
+            // set   = reply to another comment (one level recommended in UI, unlimited in DB)
+            $table->foreignId('parent_id')
+                  ->nullable()
+                  ->constrained('comments', 'id')
+                  ->onDelete('cascade');
+
             $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->softDeletes();        // adds deleted_at
-            $table->index('created_at');  // index for sorting/filtering by time
+            $table->index('created_at');
+            $table->index('parent_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('comments');

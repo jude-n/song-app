@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('song_genres', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('song_id')->constrained('songs', 'id');
-            $table->foreignId('genre_id')->constrained('genres', 'id');
+            $table->foreignId('song_id')->constrained('songs', 'id')->onDelete('cascade');
+            $table->foreignId('genre_id')->constrained('genres', 'id')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['song_id', 'genre_id'], 'idx_song_genre');
         });
     }
 

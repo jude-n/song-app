@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sampled_song_id')->constrained('songs', 'id');
             $table->foreignId('sampling_by_song_id')->constrained('songs', 'id');
-            $table->integer('sample_start_time'); // Start time in seconds in the original
-            $table->integer('sample_end_time'); // End time in seconds in the original
-            $table->integer('placement_time'); // in seconds, Where the sample appears in the new song (seconds)
-            $table->text('sample_description');
+            $table->unsignedSmallInteger('sample_number')->nullable(); // 1 = first song to sample this, 2 = next, etc.
+            $table->integer('sample_start_time')->nullable(); // Start time in seconds in the original
+            $table->integer('sample_end_time')->nullable();   // End time in seconds in the original
+            $table->integer('placement_time')->nullable();    // Where the sample appears in the new song (seconds)
+            $table->text('sample_description')->nullable();
             $table->boolean('is_confirmed')->default(false); // If the sample is confirmed by the artist
             $table->timestamps();
             $table->softDeletes();

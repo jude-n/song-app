@@ -6,30 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('playlist_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('playlist_id')->constrained('playlists', 'id');
-            $table->foreignId('comparison_id')->constrained('comparisons', 'id');
-            $table->integer('order');
+            $table->foreignId('playlist_id')->constrained('playlists', 'id')->onDelete('cascade');
+
+            // Polymorphic — playlistable_type + playlistable_id
+            // Supported models: Song, Cover, Comparison
+            // Allows a playlist to mix content types — e.g. a standalone cover
+            // alongside a full original-vs-cover comparison in the same list
+            $table->morphs('playlistable');
+
+            $table->unsignedInteger('order');
             $table->timestamp('added_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            // Unique constraint
+            // Order position must be unique within a playlist
             $table->unique(['playlist_id', 'order'], 'idx_playlist_order');
-            // Indexes
-            $table->index(['playlist_id', 'comparison_id'], 'idx_playlist_comparison_id');
+
+            // The same item cannot appear twice in the same playlist
+            $table->unique(['playlist_id', 'playlistable_type', 'playlistable_id'], 'idx_playlist_item');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('playlist_items');

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('original_song_id')->constrained('songs', 'id');
             $table->foreignId('cover_id')->constrained('covers', 'id');
             $table->string('title');
-            $table->string('description');
+            $table->text('description')->nullable();
             $table->boolean('featured')->default(false);
             $table->integer('view_count')->default(0);
             $table->timestamps();

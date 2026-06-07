@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('genres', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index('idx_genre_name');
-            $table->string('description');
+            $table->string('slug')->unique();
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
             $table->string('name')->index('idx_playlist_name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->boolean('is_public')->default(true)->index('idx_is_public');
-            $table->string('cover_image_url');
             $table->timestamps();
             $table->softDeletes();
         });

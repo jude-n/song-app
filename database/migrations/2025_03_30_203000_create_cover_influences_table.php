@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('influencer_cover_id')->constrained('covers', 'id');
             $table->foreignId('influenced_cover_id')->constrained('covers', 'id');
-            $table->text('influence_description');
+            $table->text('influence_description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('display_name');
             $table->text('bio')->nullable();
-            $table->string('profile_image_url')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -27,9 +26,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        // create index for username column
-
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

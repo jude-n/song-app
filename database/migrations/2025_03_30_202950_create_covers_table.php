@@ -6,35 +6,47 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('covers', function (Blueprint $table) {
             $table->id();
+
+            // The root original song this cover ultimately derives from
+            $table->foreignId('root_original_song_id')->constrained('songs', 'id');
+
+            // The specific song this cover is directly based on (could be the original or another cover)
             $table->foreignId('original_song_id')->constrained('songs', 'id');
+
+            // The song record representing this cover version
             $table->foreignId('cover_song_id')->constrained('songs', 'id');
-            $table->foreignId('based_on_cover_id')->constrained('covers', 'id')->nullable();
-            $table->string('title')->index('idx_title');
-            $table->foreignId('artist_id')->constrained('artists', 'id');
-            $table->integer('view_count')->default(0);
-            $table->boolean('is_featured')->default(false);
-            $table->foreignId('album_id')->constrained('albums', 'id');
-            $table->date('release_date')->index('idx_release_date');
-            $table->integer('duration');
-            $table->string('audio_url');
-            $table->string('video_url');
-            $table->string('waveform_url');
-            $table->text('lyrics');
+
+            // If this cover was based on a prior cover rather than the original
+            $table->foreignId('based_on_cover_id')->nullable()->constrained('covers', 'id');
+
+            // Type of relationship (cover, remake, remix, reinterpretation, etc.)
+            $table->foreignId('relationship_type_id')->nullable()->constrained('relationship_types', 'id');
+
+            // Chronological position among all covers of root_original_song_id (1 = first ever cover)
+            $table->unsignedSmallInteger('cover_number')->nullable();
+
+            // Optional: specific section of the original this cover references
+            $table->integer('reference_start_time')->nullable(); // seconds
+            $table->integer('reference_end_time')->nullable();   // seconds
+
+            // Editorial notes about what was taken or changed
+            $table->text('notes')->nullable();
+
+            $table->integer('view_count')->default(0)->index('idx_cover_views');
+            $table->boolean('is_featured')->default(false)->index('idx_cover_featured');
+
             $table->timestamps();
             $table->softDeletes();
+
+            // A song can only be a cover of another song once
+            $table->unique(['original_song_id', 'cover_song_id'], 'idx_original_cover');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('covers');

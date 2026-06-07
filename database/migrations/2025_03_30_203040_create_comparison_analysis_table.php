@@ -6,33 +6,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('comparison_analysis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('comparison_id')->constrained('comparisons', 'id');
-            $table->float('tempo_original');
-            $table->float('tempo_cover');
-            $table->string('key_original');
-            $table->string('key_cover');
-            $table->float('instrumentation_difference');
-            $table->float('vocal_style_difference');
-            $table->float('transformation_level');
-            $table->json('additional_data');
+            $table->foreignId('comparison_id')->constrained('comparisons', 'id')->onDelete('cascade');
+
+            // All analysis fields are nullable — data may be partial or added incrementally
+            $table->float('tempo_original')->nullable();
+            $table->float('tempo_cover')->nullable();
+            $table->string('key_original')->nullable();
+            $table->string('key_cover')->nullable();
+            $table->float('instrumentation_difference')->nullable(); // Scale 0–100
+            $table->float('vocal_style_difference')->nullable();     // Scale 0–100
+            $table->float('transformation_level')->nullable();       // Scale 0–100 overall
+            $table->json('additional_data')->nullable();             // Catch-all for future fields
+
             $table->timestamps();
             $table->softDeletes();
 
-            // Indexes
+            // One analysis record per comparison
             $table->unique('comparison_id', 'idx_comparison');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('comparison_analysis');

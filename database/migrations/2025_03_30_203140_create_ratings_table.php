@@ -6,26 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('comparison_id')->constrained();
-            $table->integer('score');
+            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
+
+            // Polymorphic — ratable_type + ratable_id
+            // Supported models: Cover, Comparison, Song
+            // Score range (1–5 or 1–10) is enforced at the application layer,
+            // not the DB, to allow flexibility if the scale changes
+            $table->morphs('ratable');
+
+            $table->unsignedTinyInteger('score');
             $table->timestamps();
 
-            // Unique constraint
-            $table->unique(['user_id', 'comparison_id'], 'idx_user_comparison');
+            // A user can only submit one rating per item
+            $table->unique(['user_id', 'ratable_type', 'ratable_id'], 'idx_user_rating');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('ratings');

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index('idx_name');
-            $table->text('bio');
-            $table->integer('formed_year');
-            $table->string('image_url');
-            $table->string('external_url');
+            $table->string('slug')->unique();
+            $table->text('bio')->nullable();
+            $table->integer('formed_year')->nullable();
+            $table->string('external_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

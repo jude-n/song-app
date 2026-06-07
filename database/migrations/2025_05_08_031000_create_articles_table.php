@@ -6,30 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->index('idx_album_title');
+            $table->foreignId('author_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->string('title');
             $table->string('slug')->unique();
-            $table->foreignId('artist_id')->constrained('artists', 'id')->onDelete('cascade');
-            $table->date('release_date')->index('idx_release_date');
+            $table->text('body');
+            $table->string('type')->default('article'); // article, interview, analysis
+            $table->timestamp('published_at')->nullable(); // null = draft
             $table->integer('view_count')->default(0);
             $table->boolean('is_featured')->default(false);
-            $table->string('external_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index('published_at');
+            $table->index('type');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('articles');
     }
 };
