@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cover_relationships');
+        Schema::dropIfExists('cover_influences');
     }
 };

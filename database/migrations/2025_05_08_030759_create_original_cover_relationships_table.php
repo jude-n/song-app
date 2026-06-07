@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('cover_song_id');
             $table->unsignedBigInteger('relationship_type_id')->nullable();
 
-            $table->foreign('original_song_id')->references('song_id')->on('songs')->onDelete('cascade');
-            $table->foreign('cover_song_id')->references('song_id')->on('songs')->onDelete('cascade');
+            $table->foreign('original_song_id')->references('id')->on('songs')->onDelete('cascade');
+            $table->foreign('cover_song_id')->references('id')->on('songs')->onDelete('cascade');
             $table->foreign('relationship_type_id')->references('id')->on('relationship_types')->nullOnDelete();
         });
 

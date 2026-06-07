@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('playlist_id')->constrained('playlists', 'id');
             $table->foreignId('comparison_id')->constrained('comparisons', 'id');
             $table->integer('order');
-            $table->timestamps('added_at');
+            $table->timestamp('added_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
