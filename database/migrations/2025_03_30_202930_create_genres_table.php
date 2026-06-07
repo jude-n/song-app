@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index('idx_genre_name');
             $table->string('slug')->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

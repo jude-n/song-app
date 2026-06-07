@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('song_id')->constrained('songs', 'id')->onDelete('cascade');
             $table->foreignId('genre_id')->constrained('genres', 'id')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
+            // No softDeletes — pivot rows use hard delete.
+            // Soft-deleting here would leave a live FK while hiding the row, causing ghost associations.
 
             $table->unique(['song_id', 'genre_id'], 'idx_song_genre');
         });
